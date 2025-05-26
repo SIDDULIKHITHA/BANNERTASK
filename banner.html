@@ -3,169 +3,202 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kent Custom Carousel</title>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+  <title>Kent Style Banner Slider</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
       margin: 0;
       font-family: Arial, sans-serif;
+      background: #f6f6f6;
     }
-
-    .custom-banner {
-      width: 100%;
+    .banner-slider {
+      position: relative;
+      width: 100vw;
+      max-width: 100vw;
+      height: 750px;
       overflow: hidden;
-      position: relative;
+      margin: 0 auto;
+      background: #000;
     }
-
-    .custom-carousel {
+    .banner-slides {
       position: relative;
       width: 100%;
       height: 100%;
     }
-
-    .custom-slides-wrapper {
-      display: flex;
-      transition: transform 0.5s ease-in-out;
-      width: 300%;
+    .banner-slide {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
       height: 100%;
+      opacity: 0;
+      transition: opacity 0.7s cubic-bezier(.4,0,.2,1);
+      z-index: 1;
+      pointer-events: none;
     }
-
-    .custom-slide {
-      flex: 1 0 100%;
-      max-width: 100%;
-      height: 100%;
+    .banner-slide.active {
+      opacity: 1;
+      z-index: 2;
+      pointer-events: auto;
     }
-
-    .custom-slide picture,
-    .custom-slide img {
+    .banner-slide picture,
+    .banner-slide img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
-
-    .custom-indicators {
+    .banner-indicators {
       position: absolute;
-      bottom: 10px;
       left: 50%;
+      bottom: 18px;
       transform: translateX(-50%);
       display: flex;
       gap: 10px;
+      z-index: 10;
     }
-
-    .custom-indicators button {
-      width: 10px;
-      height: 10px;
+    .banner-indicators button {
+      width: 13px;
+      height: 13px;
       border-radius: 50%;
       border: none;
-      background: #ccc;
+      background: #fff;
+      opacity: 0.5;
       cursor: pointer;
+      transition: opacity 0.25s;
+      outline: none;
     }
-
-    .custom-indicators button.active-indicator {
+    .banner-indicators button.active {
+      opacity: 1;
       background: #0fccce;
     }
-
-    .custom-control-left,
-    .custom-control-right {
+    .banner-arrow {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(0, 0, 0, 0.3);
-      padding: 10px;
+      background: rgba(0,0,0,0.3);
+      border: none;
+      color: #fff;
+      font-size: 32px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       cursor: pointer;
-      color: white;
       z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
     }
-
-    .custom-control-left {
-      left: 10px;
+    .banner-arrow:hover {
+      background: rgba(0,0,0,0.6);
     }
-
-    .custom-control-right {
-      right: 10px;
+    .banner-arrow.left {
+      left: 16px;
     }
-
-    .custom-control-left .fas,
-    .custom-control-right .fas {
-      font-size: 20px;
+    .banner-arrow.right {
+      right: 16px;
+    }
+    @media (max-width: 768px) {
+      .banner-slider {
+        height: 180px;
+      }
+    }
+    @media (max-width: 480px) {
+      .banner-slider {
+        height: 110px;
+      }
     }
   </style>
 </head>
 <body>
 
-<div class="custom-banner">
-  <div class="custom-carousel">
-    <div class="custom-slides-wrapper" id="customSlides">
-      <div class="custom-slide">
-        <a href="#waterpurifiers">
-          <picture>
-            <source srcset="https://www.kent.co.in/images/banners/water-banner.webp" media="(min-width: 768px)">
-            <img src="https://www.kent.co.in/images/banners/water-banner-mobile.webp" alt="Kent Water Purifiers">
-          </picture>
-        </a>
-      </div>
-      <div class="custom-slide">
-        <a href="#kitchenappliances">
-          <picture>
-            <source srcset="https://www.kent.co.in/images/banners/kitchen-banner.jpg" media="(min-width: 768px)">
-            <img src="https://www.kent.co.in/images/banners/kitchen-banner-mobile.jpg" alt="Kent Kitchen Appliances">
-          </picture>
-        </a>
-      </div>
-      <div class="custom-slide">
-        <a href="#homeappliances">
-          <picture>
-            <source srcset="https://www.kent.co.in/images/banners/home-banner.jpg" media="(min-width: 768px)">
-            <img src="https://www.kent.co.in/images/banners/home-banner-mobile.jpg" alt="Kent Home Appliances">
-          </picture>
-        </a>
-      </div>
+<div class="banner-slider" id="bannerSlider">
+  <div class="banner-slides">
+    <div class="banner-slide active">
+      <a href="#waterpurifiers">
+        <picture>
+          <source srcset="https://www.kent.co.in/images/banners/water-banner.webp" media="(min-width: 768px)">
+          <img src="https://www.kent.co.in/images/banners/water-banner-mobile.webp" alt="Kent Water Purifiers">
+        </picture>
+      </a>
     </div>
-
-    <div class="custom-indicators">
-      <button onclick="goToCustomSlide(0)" class="active-indicator"></button>
-      <button onclick="goToCustomSlide(1)"></button>
-      <button onclick="goToCustomSlide(2)"></button>
+    <div class="banner-slide">
+      <a href="#kitchenappliances">
+        <picture>
+          <source srcset="https://www.kent.co.in/images/banners/kitchen-banner.jpg" media="(min-width: 768px)">
+          <img src="https://www.kent.co.in/images/banners/kitchen-banner-mobile.jpg" alt="Kent Kitchen Appliances">
+        </picture>
+      </a>
     </div>
-
-    <div class="custom-control-left" onclick="changeCustomSlide(-1)">
-      <span class="fas fa-arrow-circle-left"></span>
+    <div class="banner-slide">
+      <a href="#homeappliances">
+        <picture>
+          <source srcset="https://www.kent.co.in/images/banners/home-banner.jpg" media="(min-width: 768px)">
+          <img src="https://www.kent.co.in/images/banners/home-banner-mobile.jpg" alt="Kent Home Appliances">
+        </picture>
+      </a>
     </div>
-    <div class="custom-control-right" onclick="changeCustomSlide(1)">
-      <span class="fas fa-arrow-circle-right"></span>
-    </div>
+  </div>
+  <button class="banner-arrow left" aria-label="Previous slide">&#10094;</button>
+  <button class="banner-arrow right" aria-label="Next slide">&#10095;</button>
+  <div class="banner-indicators">
+    <button aria-label="Go to slide 1" class="active"></button>
+    <button aria-label="Go to slide 2"></button>
+    <button aria-label="Go to slide 3"></button>
   </div>
 </div>
 
 <script>
-  const customSlides = document.getElementById('customSlides');
-  const customIndicators = document.querySelectorAll('.custom-indicators button');
-  let customIndex = 0;
+  const banner = document.getElementById('bannerSlider');
+  const slides = banner.querySelectorAll('.banner-slide');
+  const indicators = banner.querySelectorAll('.banner-indicators button');
+  const leftArrow = banner.querySelector('.banner-arrow.left');
+  const rightArrow = banner.querySelector('.banner-arrow.right');
+  let current = 0;
+  let timer = null;
+  const total = slides.length;
 
-  function updateCustomSlider() {
-    customSlides.style.transform = `translateX(-${customIndex * 100}%)`;
-    customIndicators.forEach((dot, i) => {
-      dot.classList.toggle('active-indicator', i === customIndex);
+  function showSlide(idx) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === idx);
+      indicators[i].classList.toggle('active', i === idx);
     });
+    current = idx;
   }
 
-  function changeCustomSlide(direction) {
-    customIndex = (customIndex + direction + 3) % 3;
-    updateCustomSlider();
+  function nextSlide() {
+    showSlide((current + 1) % total);
+  }
+  function prevSlide() {
+    showSlide((current - 1 + total) % total);
   }
 
-  function goToCustomSlide(i) {
-    customIndex = i;
-    updateCustomSlider();
+  indicators.forEach((btn, i) => {
+    btn.addEventListener('click', () => {
+      showSlide(i);
+      resetAutoSlide();
+    });
+  });
+  rightArrow.addEventListener('click', () => {
+    nextSlide();
+    resetAutoSlide();
+  });
+  leftArrow.addEventListener('click', () => {
+    prevSlide();
+    resetAutoSlide();
+  });
+
+  function startAutoSlide() {
+    timer = setInterval(nextSlide, 5000);
+  }
+  function resetAutoSlide() {
+    clearInterval(timer);
+    startAutoSlide();
   }
 
-  setInterval(() => changeCustomSlide(1), 5000);
+  banner.addEventListener('mouseenter', () => clearInterval(timer));
+  banner.addEventListener('mouseleave', startAutoSlide);
+
+  startAutoSlide();
 </script>
 
 </body>
